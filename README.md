@@ -4,7 +4,7 @@
 
 The schematic overview of SCrOFit.
 
-![workflow](.docs/figure/SCrOFit.png)
+![workflow](./docs/figure/SCrOFit.png)
 
 ## 📥 Installation
 
