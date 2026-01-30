@@ -1,0 +1,76 @@
+site_name: SCRoFit
+site_url: https://compbioclub.github.io/SCRoFit
+theme:
+  name: "material"
+  features:
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - search.share\
+    # - navigation.footer
+  palette: 
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      # primary: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+extra:
+  homepage:
+  social:
+    - icon: fontawesome/solid/house
+      link: https://compbio.club
+    - icon: fontawesome/brands/github
+      link: https://compbioclub.github.io/SCRoFit/
+  encoding: 'utf-8'
+
+copyright: Copyright &copy; 2025 CompBioClub
+
+repo_url: https://github.com/compbioclub/SCRoFit
+repo_name: SCRoFit
+
+plugins:
+  - mknotebooks:
+      encoding: 'utf-8'
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+  - search
+  - autorefs
+
+extra_css:
+  - css/custom.css
+
+extra_javascript:
+  - js/tablesort.min.js
+  - js/sort-init.js  
+
+
+markdown_extensions:
+- admonition
+- codehilite
+- pymdownx.superfences
+- attr_list
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Tutorial: 
+    - Run SMA data with SCRoFit: tutorial/run_SCRoFit_SMA.ipynb
+    - Run Age data with SCRoFit: tutorial/run_SCRoFit_Age.ipynb
+  - Reference: reference.md
