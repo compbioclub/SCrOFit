@@ -1,10 +1,10 @@
 # SCRoFit
 
-Welcome to the official documentation of **SCRoFit**!
+Welcome to the official documentation of **SCrOFit**!
 
 ## Overview
 
-![workflow](./figure/workflow.png)
+![workflow](./figure/SCrOFit.png)
 
 
 
@@ -14,15 +14,15 @@ Want to start using it immediately? Check out the [Installation Guide](installat
 
 
 ## Tutorial Guide
-The followings are tutorials of how to use SCRoFit in different scenarios:
+The followings are tutorials of how to use SCrOFit in different scenarios:
 
--   [Run SMA data with SCRoFit](tutorial/run_SCRoFit_SMA.ipynb)
--   [Run Age data with SCRoFit](tutorial/run_SCRoFit_Age.ipynb)
+-   [Run SMA data with SCrOFit](tutorial/run_SCrOFit_SMA.ipynb)
+-   [Analyze SMA data after SCrOFit](tutorial/analysis_SMA_after_SCrOFit.ipynb)
 
 
 ## Citation
 
-If you use SCRoFit in your research, please cite the following paper:
+If you use SCrOFit in your research, please cite the following paper:
 
 APA format:
 

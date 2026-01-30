@@ -1,6 +1,6 @@
 # Installation Guide
 
-This guide explains how to install and configure **SCRoFit**.
+This guide explains how to install and configure **SCrOFit**.
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ Before installation, please ensure you have the following dependencies:
 From GitHub (recommended for the latest version)
 
 ```bash
-pip install git+https://github.com/compbioclub/SCRoFit.git
+pip install git+https://github.com/compbioclub/SCrOFit.git
 
 ```
   
