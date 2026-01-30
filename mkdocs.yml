@@ -1,5 +1,5 @@
-site_name: SCRoFit
-site_url: https://compbioclub.github.io/SCRoFit
+site_name: SCrOFit
+site_url: https://compbioclub.github.io/SCrOFit
 theme:
   name: "material"
   features:
@@ -34,13 +34,13 @@ extra:
     - icon: fontawesome/solid/house
       link: https://compbio.club
     - icon: fontawesome/brands/github
-      link: https://compbioclub.github.io/SCRoFit/
+      link: https://compbioclub.github.io/SCrOFit/
   encoding: 'utf-8'
 
-copyright: Copyright &copy; 2025 CompBioClub
+copyright: Copyright &copy; 2026 CompBioClub
 
-repo_url: https://github.com/compbioclub/SCRoFit
-repo_name: SCRoFit
+repo_url: https://github.com/compbioclub/SCrOFit
+repo_name: SCrOFit
 
 plugins:
   - mknotebooks:
@@ -71,6 +71,6 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - Tutorial: 
-    - Run SMA data with SCRoFit: tutorial/run_SCRoFit_SMA.ipynb
-    - Run Age data with SCRoFit: tutorial/run_SCRoFit_Age.ipynb
+    - Run SMA data with SCrOFit: tutorial/run_SCrOFit_SMA.ipynb
+    - Analyze SMA data after SCrOFit: tutorial/analysis_SMA_after_SCrOFit.ipynb
   - Reference: reference.md
