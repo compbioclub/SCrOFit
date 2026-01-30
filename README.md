@@ -1,4 +1,4 @@
-# SCrOFit
+# Cellular-resolution spatial mapping of transcriptome–metabolome dynamics with SCrOFit
 
 ## Overview
 
