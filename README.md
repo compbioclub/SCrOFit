@@ -11,7 +11,7 @@ The schematic overview of SCrOFit.
 **From GitHub (recommended for the latest version)**
 
 ```
-pip install git+https://github.com/compbioclub/SCrOFit.git@dev
+pip install git+https://github.com/compbioclub/SCrOFit.git
 ```
 
 ## 🚀 Quick Start
