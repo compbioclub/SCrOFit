@@ -115,7 +115,9 @@ def _spatial_scatter(adata, color, ccs_type='spatial',
     plt.scatter(coords[:,0], coords[:,1], c=adata[:,color].X.toarray(), s=s, cmap=cmap)
     plt_util(color)
 
-def embed(adata, color=None, figsize=(2,2), **kwargs):
+def embed(adata, color=None, figsize=(2,2), 
+          out_fn=None, out_format='pdf',
+          **kwargs):
     fig, ax = plt.subplots(figsize=figsize)
     sc.pl.umap(adata, color=color, size=15, 
                na_color='black', ax=ax, show=False,
@@ -125,9 +127,12 @@ def embed(adata, color=None, figsize=(2,2), **kwargs):
     ax.set_xlabel("SCrOFit Embed1")
     ax.set_ylabel("SCrOFit Embed2")
     fig.tight_layout()
+    if out_fn is not None:
+        fig.savefig(out_fn, format=out_format)
     plt.show()    
 
 def ocs_spatial_scatter(adata, key, figsize=None,
+                        out_fn=None, out_format='pdf',                        
                         **kwargs):
     fig, ax = plt.subplots(figsize=figsize)
     if f'{key}_spatial' in adata.obsm.keys():
@@ -142,9 +147,12 @@ def ocs_spatial_scatter(adata, key, figsize=None,
     ax.set_xlabel(f"{key} OCS1")
     ax.set_ylabel(f"{key} OCS2")
     fig.tight_layout()
+    if out_fn:
+        fig.savefig(out_fn, format=out_format)
     plt.show()  
 
 def ccs_spatial_scatter(adata, key, figsize=None,
+                        out_fn=None, out_format='pdf',
                         **kwargs):
     fig, ax = plt.subplots(figsize=figsize)
     spatial_key = f'{key}_spatial_rir'
@@ -156,6 +164,8 @@ def ccs_spatial_scatter(adata, key, figsize=None,
     ax.set_xlabel("SCrOFit CCS1")
     ax.set_ylabel("SCrOFit CCS2")
     fig.tight_layout()
+    if out_fn:
+        fig.savefig(out_fn, format=out_format)
     plt.show()       
 
 from matplotlib.colors import ListedColormap
@@ -183,7 +193,9 @@ def ccs_spatial_zoom(
     invert_y=True,
     st_cmap='Accent',
     g_cmap='Spectral_r',
-    m_cmap='plasma'
+    m_cmap='plasma',
+    out_fn=None,
+    out_format='pdf'
 ):
 
     # --- Spot-level coordinates and colours ---------------------------------
@@ -273,6 +285,8 @@ def ccs_spatial_zoom(
     ax.set_aspect("equal")
     ax.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), frameon=False)
     plt.tight_layout()
+    if out_fn is not None:
+        plt.savefig(out_fn, format=out_format)
     plt.show()
 
 
@@ -286,7 +300,8 @@ from plotnine import *
 def violin(adata, compare_type, dopamine, comparisons,
              fig_size=(5, 5), 
              palette=sc.pl.palettes.default_20,
-             text_x_angle=0):
+             text_x_angle=0,
+             out_fn=None, out_format='pdf'):
 
     df = adata.obs.sort_values(compare_type).copy()
     df['dopamine'] = df[dopamine].astype(float)
@@ -348,6 +363,8 @@ def violin(adata, compare_type, dopamine, comparisons,
             label=f"p = {ann['pval']:.2e}",
             ha='center', size=8, color='black'
         )
+    if out_fn:
+        p.save(out_fn)
 
     return p    
 
@@ -361,26 +378,41 @@ from plotnine import (
 )
 from anndata import AnnData
 
-def plot_gene_cell_type(st_adata, mdata, gene, compare_header, comapre_type):
+def plot_gene_cell_type(st_adata, mdata, gene, compare_header, comapre_type, out_prefix='./'):
     adata = st_adata.copy()
     sample='V11T17-102'
+    out_fn = None
     adata.obs[compare_header][adata.obs[compare_header] != comapre_type] = np.nan
+    if out_prefix is not None:
+        out_fn = f'ocs_{comapre_type}_{compare_header.lower()}.pdf'
     ocs_spatial_scatter(adata, 'ST', color=compare_header, img=True, shape=None, 
-                          library_id=sample, cmap='Spectral_r', size=2) 
+                          library_id=sample, cmap='Spectral_r', size=2, out_fn=out_fn) 
     adata[adata[adata.obs[compare_header] != comapre_type].obs_names, gene].X = np.nan
+    if out_prefix is not None:
+        out_fn = f'ocs_{comapre_type}_{gene}.pdf'    
     ocs_spatial_scatter(adata, 'ST', color=gene, img=True, shape=None, 
-                          library_id=sample, cmap='Spectral_r', size=2)  
+                          library_id=sample, cmap='Spectral_r', size=2, out_fn=out_fn)  
     adata = mdata.copy()
     adata.obs = adata.obs.reset_index()
     adata.obs[f'ST_{compare_header}'][adata.obs[f'ST_{compare_header}'] != comapre_type] = np.nan
     adata[adata[adata.obs[f'ST_{compare_header}'] != comapre_type].obs_names, gene].X = np.nan
     adata[adata[adata.obs[f'ST_{compare_header}'] != comapre_type].obs_names, 'mz_674.2805'].X = np.nan
+    if out_prefix is not None:
+        out_fn = f'ccs_{comapre_type}_mz_674.2805.pdf'    
     ccs_spatial_scatter(adata, 'SM', color='mz_674.2805', img=True, shape=None, 
-                          library_id=sample, cmap='plasma', size=2)
-    embed(adata, color=f'ST_{compare_header}', figsize=(1.8, 2))
-    embed(adata, color=gene, cmap='Spectral_r', figsize=(2, 2))
-    embed(adata, color='mz_674.2805', cmap='plasma', figsize=(2.1, 2))
+                        library_id=sample, cmap='plasma', size=2, out_fn=out_fn)
+    if out_prefix is not None:
+        out_fn = f'embed_{comapre_type}_{compare_header}.pdf'        
+    embed(adata, color=f'ST_{compare_header}', figsize=(1.8, 2), out_fn=out_fn)
+    if out_prefix is not None:
+        out_fn = f'embed_{comapre_type}_{gene}.pdf'    
+    embed(adata, color=gene, cmap='Spectral_r', figsize=(2, 2), out_fn=out_fn)
+    if out_prefix is not None:
+        out_fn = f'embed_{comapre_type}_mz_674.2805.pdf'    
+    embed(adata, color='mz_674.2805', cmap='plasma', figsize=(2.1, 2), out_fn=out_fn)
 
+    if out_prefix is not None:
+        out_fn = f'scatter_{comapre_type}_{gene}_mz_674.2805.pdf'
     p = scatter_two_genes(adata, gene, 'mz_674.2805')
     return p
 
@@ -389,7 +421,8 @@ def scatter_two_genes(
     adata: AnnData, 
     gene_x: str, 
     gene_y: str,
-    figsize = (1.8,2)
+    figsize = (1.8,2),
+    out_fn = None
 ):
     """
     Plot a scatter of gene_x vs gene_y expression in adata.obs
@@ -433,6 +466,7 @@ def scatter_two_genes(
             panel_grid=element_blank(),
         )
     )
-    
+    if out_fn:
+        p.save(out_fn)
     return p
 
